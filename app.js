@@ -39,6 +39,8 @@ async function run() {
         const product = shaveClub.collection("product");
         //Order Collection
         const orderCollection = shaveClub.collection("orderCollection");
+        //Review
+        const reviewCollection = shaveClub.collection("reviewCollection");
 
 
         //ADD Product API
@@ -91,6 +93,18 @@ async function run() {
             // console.log(deleteMyOrder)
             const query = { _id: ObjectId(deleteMyOrder) };
             const result = await orderCollection.deleteOne(query);
+            res.send(result);
+        });
+        
+        // ADD Review
+        app.post("/addReview", async(req, res)=>{
+            const addReview = req.body;
+            const result = await reviewCollection.insertOne(addReview);
+            res.send(result);
+        });
+        // GET Review 
+        app.get("/review", async(req, res)=>{
+            const result = await reviewCollection.find({}).toArray();
             res.send(result);
         })
 
